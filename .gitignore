@@ -1,0 +1,15 @@
+.idea/
+xebia-spring-travel-antifraud/target/
+xebia-spring-travel-antifraud/xebia-spring-travel-antifraud.iml
+xebia-spring-travel-common/target/
+xebia-spring-travel-common/xebia-spring-travel-common.iml
+xebia-spring-travel-data-importer/target/
+xebia-spring-travel-data-importer/xebia-spring-travel-data-importer.iml
+xebia-spring-travel-ecommerce/target/
+xebia-spring-travel-ecommerce/xebia-spring-travel-ecommerce.iml
+xebia-spring-travel-environment-installer/__MACOSX/
+xebia-spring-travel-environment-installer/apache-tomcat-7.0.22/
+xebia-spring-travel-environment-installer/environment.source
+xebia-spring-travel-environment-installer/hsqldb-2.2.5/
+xebia-spring-travel-environment-installer/jakarta-jmeter-2.5.1/
+xebia-spring-travel.iml
