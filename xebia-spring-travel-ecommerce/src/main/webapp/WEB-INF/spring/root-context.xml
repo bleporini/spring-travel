@@ -10,7 +10,7 @@
 		http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-2.5.xsd">
 
     <!-- Scans for application @Components to deploy -->
-    <context:component-scan base-package="org.springframework.webflow.samples" />
+    <context:component-scan base-package="fr.springframework.webflow.samples" />
 
    <!-- Imports the configurations of the different infrastructure systems of the application -->
    <import resource="mvc.xml" />
@@ -29,7 +29,7 @@
    </bean>
 
    <!-- @Configuration classes contributing Spring beans. -->
-   <bean class="org.springframework.webflow.samples.booking.PaymentConfiguration" />
+   <bean class="fr.springframework.webflow.samples.booking.PaymentConfiguration" />
 
    <!--  <management:servlet-context-aware-mbean-server id="mbeanServer" /> 
    <management:profile-aspect server="mbeanServer" jmxDomain="travel-ecommerce" />
@@ -37,18 +37,18 @@
    <context:mbean-server id="mbeanServer"/>
    <context:mbean-export server="mbeanServer" />
 
-  	<bean id="jpaLogger" class="org.springframework.webflow.samples.util.JpaLogger"/>
+  	<bean id="jpaLogger" class="fr.springframework.webflow.samples.util.JpaLogger"/>
   	
-  	<bean id="databaseCacheAspect" class="org.springframework.webflow.samples.util.DatabaseCacheAspect">
+  	<bean id="databaseCacheAspect" class="fr.springframework.webflow.samples.util.DatabaseCacheAspect">
   		<property name="hotelCache" ref="hotelCache"/>
   	</bean>
   	
-  	<bean id="hotelCache" class="org.springframework.webflow.samples.util.HotelCache"/>
+  	<bean id="hotelCache" class="fr.springframework.webflow.samples.util.HotelCache"/>
   	
-  	<bean id="bugController" class="org.springframework.webflow.samples.util.BugController"/>
+  	<bean id="bugController" class="fr.springframework.webflow.samples.util.BugController"/>
   	
-  	<bean id="cacheFilter" class="org.springframework.webflow.samples.util.CacheFilter"/>
+  	<bean id="cacheFilter" class="fr.springframework.webflow.samples.util.CacheFilter"/>
 
-    <bean id="timeLoggerAspect" class="org.springframework.webflow.samples.util.TimeLoggerAspect" />
+    <bean id="timeLoggerAspect" class="fr.springframework.webflow.samples.util.TimeLoggerAspect" />
 
 </beans>

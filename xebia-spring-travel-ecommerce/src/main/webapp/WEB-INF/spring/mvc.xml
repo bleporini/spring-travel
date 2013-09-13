@@ -42,6 +42,6 @@
 	</bean>
 
 	<!-- Custom FlowHandler for the hotel booking flow -->
-	<bean name="hotels/booking" class="org.springframework.webflow.samples.booking.BookingFlowHandler" />	
+	<bean name="hotels/booking" class="fr.springframework.webflow.samples.booking.BookingFlowHandler" />
 		
 </beans>
