@@ -37,7 +37,8 @@ public class Hotel implements Serializable {
 	
 	private Set<Booking> bookings;
 
-	@OneToMany(fetch = FetchType.EAGER)
+//	@OneToMany(fetch = FetchType.EAGER)
+	@OneToMany(fetch = FetchType.LAZY)
 	public Set<Booking> getBookings() {
 		return bookings;
 	}
