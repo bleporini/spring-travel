@@ -122,6 +122,11 @@ public class BugController {
         return getStatusString(timeLoggerAspect.isBugEnabled());
     }
 
+    @ManagedAttribute
+    public String getBug8(){
+        return getStatusString(bookingService.isBookings2Enabled());
+    }
+
     @ManagedOperation
     public String disableBug1(int securityCode) {
         if (securityCode == BugEnum.BOOKING_ACTION_CONTROLLER.getCode()) {
@@ -201,6 +206,24 @@ public class BugController {
         return "We cannot do anything alone, but together we can do anything. Come on, friends, unity gives strength.";
     }
 
+    /**
+     *
+     * @param securityCode
+     * @return
+     */
+    @ManagedOperation
+    public String disableBug8(int securityCode) {
+        if (securityCode == BugEnum.BOOKING_NO_LIMIT.getCode()) {
+            this.bookingService.setBookings2Enabled(false);
+            return "Bug 8 is now disabled";
+        }
+
+        this.bookingService.setBookings2Enabled(true);
+
+        return "We cannot do anything alone, but together we can do anything. Come on, friends, unity gives strength.";
+    }
+
+
     @ManagedOperation
     public String resetAllBugs(){
         bugService.resetBugs();
@@ -208,6 +231,7 @@ public class BugController {
         this.cacheFilter.setBugEnabled(true);
         this.bookingService.setHotelsEnabled(true);
         this.bookingService.setBookingsEnabled(true);
+        this.bookingService.setBookings2Enabled(true);
         this.databaseCacheAspect.setEnabled(true);
         this.jpaLogger.setEnabled(true);
         this.bookingAction.setBugStatus(true);

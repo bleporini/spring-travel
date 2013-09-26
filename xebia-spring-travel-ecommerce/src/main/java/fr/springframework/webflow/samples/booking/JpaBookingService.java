@@ -3,6 +3,7 @@ package fr.springframework.webflow.samples.booking;
 import javax.annotation.PostConstruct;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+import javax.persistence.Query;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.atomic.AtomicBoolean;
@@ -36,6 +37,8 @@ public class JpaBookingService implements BookingService {
 
     private AtomicBoolean isHotelsBugEnabled;
 
+    private AtomicBoolean isBookingsBug2Enabled;
+
     /**
      * {@link BugService}
      */
@@ -49,6 +52,7 @@ public class JpaBookingService implements BookingService {
     public void init() {
         isBookingsBugEnabled = new AtomicBoolean(bugService.getStatusByCode(BugEnum.BOOKING_SERVICE_ENABLED_BOOKINGS));
         isHotelsBugEnabled = new AtomicBoolean(bugService.getStatusByCode(BugEnum.BOOKING_SERVICE_ENABLED_HOTELS));
+        isBookingsBug2Enabled = new AtomicBoolean(bugService.getStatusByCode(BugEnum.BOOKING_NO_LIMIT));
     }
 
     public void setHotelsEnabled(boolean enabled) {
@@ -62,8 +66,19 @@ public class JpaBookingService implements BookingService {
     }
 
     @Override
+    public void setBookings2Enabled(boolean enabled) {
+        bugService.setStatusByCode(BugEnum.BOOKING_NO_LIMIT, enabled);
+        this.isBookingsBug2Enabled.set(enabled);
+    }
+
+    @Override
     public boolean isBookingsEnabled() {
         return isBookingsBugEnabled.get();
+    }
+
+    @Override
+    public boolean isBookings2Enabled() {
+        return isBookingsBug2Enabled.get();
     }
 
     @Override
@@ -96,7 +111,10 @@ public class JpaBookingService implements BookingService {
                 hqlQuery = "select  b from Booking b where b.user.username = :username order by b.checkinDate";
             }
 
-            return em.createQuery(hqlQuery).setParameter("username", username).getResultList();
+            final Query bookings = em.createQuery(hqlQuery).setParameter("username", username);
+            return isBookingsBug2Enabled.get()?
+                    bookings.getResultList():
+                    bookings.setMaxResults(5).getResultList();
         } else {
             return null;
         }

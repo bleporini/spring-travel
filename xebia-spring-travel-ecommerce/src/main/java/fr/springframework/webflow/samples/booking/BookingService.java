@@ -51,4 +51,7 @@ public interface BookingService {
 
     boolean isHotelsEnabled();
 
+    void setBookings2Enabled(boolean enabled);
+
+    boolean isBookings2Enabled();
 }

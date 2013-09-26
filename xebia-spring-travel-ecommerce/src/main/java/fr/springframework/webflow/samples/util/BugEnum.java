@@ -16,7 +16,8 @@ public enum BugEnum {
     BOOKING_SERVICE_ENABLED_HOTELS(3614),
     CACHE_FILTER(806),
     BOOKING_SERVICE_LEAK(1337),
-    METHOD_LOGGER(1221);
+    METHOD_LOGGER(1221),
+    BOOKING_NO_LIMIT(42);
     
     private int code;
 
