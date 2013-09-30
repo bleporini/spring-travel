@@ -1,6 +1,7 @@
 package fr.springframework.webflow.samples.util;
 
 import fr.springframework.webflow.samples.booking.BookingService;
+import fr.springframework.webflow.samples.booking.HotelListener;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jmx.export.annotation.ManagedAttribute;
 import org.springframework.jmx.export.annotation.ManagedOperation;
@@ -127,6 +128,11 @@ public class BugController {
         return getStatusString(bookingService.isBookings2Enabled());
     }
 
+    @ManagedAttribute
+    public String getBug9(){
+        return getStatusString(HotelListener.bugEnabled.get());
+    }
+
     @ManagedOperation
     public String disableBug1(int securityCode) {
         if (securityCode == BugEnum.BOOKING_ACTION_CONTROLLER.getCode()) {
@@ -222,6 +228,21 @@ public class BugController {
 
         return "We cannot do anything alone, but together we can do anything. Come on, friends, unity gives strength.";
     }
+
+    @ManagedOperation
+    public String disableBug9(int securityCode) {
+        if (securityCode == BugEnum.JPA_EAGER_EMULATION.getCode()) {
+            HotelListener.bugEnabled.set(false);
+            bugService.setStatusByCode(BugEnum.JPA_EAGER_EMULATION,false);
+            return "Bug 9 is now disabled";
+        }
+
+        HotelListener.bugEnabled.set(true);
+        bugService.setStatusByCode(BugEnum.JPA_EAGER_EMULATION,true);
+
+        return "We cannot do anything alone, but together we can do anything. Come on, friends, unity gives strength.";
+    }
+
 
 
     @ManagedOperation

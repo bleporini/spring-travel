@@ -53,6 +53,8 @@ public class JpaBookingService implements BookingService {
         isBookingsBugEnabled = new AtomicBoolean(bugService.getStatusByCode(BugEnum.BOOKING_SERVICE_ENABLED_BOOKINGS));
         isHotelsBugEnabled = new AtomicBoolean(bugService.getStatusByCode(BugEnum.BOOKING_SERVICE_ENABLED_HOTELS));
         isBookingsBug2Enabled = new AtomicBoolean(bugService.getStatusByCode(BugEnum.BOOKING_NO_LIMIT));
+        //Not the right place but useful...
+        HotelListener.bugEnabled.set(bugService.getStatusByCode((BugEnum.JPA_EAGER_EMULATION)));
     }
 
     public void setHotelsEnabled(boolean enabled) {

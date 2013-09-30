@@ -13,6 +13,9 @@
     <context:property-placeholder
             location="classpath:/application.properties" />
 
+    <!--<context:component-scan base-package="fr.springframework.webflow.samples.booking"/>-->
+    <bean class="fr.springframework.webflow.samples.booking.HotelTest$HotelGenerator"/>
+
    <!-- Drives transactions using local JPA APIs -->
    <bean id="transactionManager" class="org.springframework.orm.jpa.JpaTransactionManager">
       <property name="entityManagerFactory" ref="entityManagerFactory" />
@@ -25,7 +28,7 @@
          <bean class="fr.xebia.springframework.orm.jpa.vendor.XHibernateJpaVendorAdapter">
             <property name="database" value="${jpa.database}" />
             <property name="showSql" value="true"/>
-            <property name="hbm2ddlAuto" value="${jpa.hbm2ddlAuto}"/>
+            <property name="hbm2ddlAuto" value="create-drop"/>
          </bean>
       </property>
    </bean>

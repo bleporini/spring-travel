@@ -67,6 +67,11 @@ public class JpaBugService implements BugService {
 
         if(bug != null) {
             bug.setEnabled(enabled);
+        }else{
+            final Bug newBug = new Bug();
+            newBug.setCode(bugRef.getCode());
+            newBug.setEnabled(enabled);
+            em.persist(newBug);
         }
     }
 
