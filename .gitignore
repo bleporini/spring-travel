@@ -13,3 +13,5 @@ xebia-spring-travel-environment-installer/environment.source
 xebia-spring-travel-environment-installer/hsqldb-2.2.5/
 xebia-spring-travel-environment-installer/jakarta-jmeter-2.5.1/
 xebia-spring-travel.iml
+*/target
+*.iml
