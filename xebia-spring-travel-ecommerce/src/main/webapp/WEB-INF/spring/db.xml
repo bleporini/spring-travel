@@ -35,5 +35,6 @@
       <management:initial-size value="${jdbc.initial}"/>
       <management:max-active value="${jdbc.max}"/>
       <management:max-wait value="${jdbc.maxWait}"/>
+      <management:max-idle value="${jdbc.maxIdle}"/>
    </management:dbcp-datasource>
 </beans>
