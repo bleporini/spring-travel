@@ -113,7 +113,12 @@ public class JpaBookingService implements BookingService {
                 hqlQuery = "select  b from Booking b where b.user.username = :username order by b.checkinDate";
             }
 
-            final Query bookings = em.createQuery(hqlQuery).setParameter("username", username);
+            Query bookings = em.createQuery(hqlQuery);
+            bookings.setParameter("username", username);
+            System.out.println("JpaBookingService.findBookings yes 3");
+
+            HotelListener.override.set(Boolean.TRUE);
+
             return isBookingsBug2Enabled.get()?
                     bookings.getResultList():
                     bookings.setMaxResults(5).getResultList();

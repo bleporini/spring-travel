@@ -13,15 +13,16 @@ public class HotelListener {
 
     public static AtomicBoolean bugEnabled = new AtomicBoolean(true);
 
+    public static ThreadLocal<Boolean> override = new ThreadLocal<Boolean>();
+
     @PostLoad
     public void onPostLoad(Hotel hotel){
-        if(bugEnabled.get())
-            hotel.getBookings().size();
-//        System.out.println("hotel.getBookings().size() = " + hotel.getBookings().size());
-/*
-        final RuntimeException yes = new RuntimeException("yes");
-        yes.printStackTrace();
-        throw yes;
-*/
+        System.out.println("HotelListener.onPostLoad");
+        if(bugEnabled.get()) {
+            if(override.get() == null || !override.get()){
+                hotel.getBookings().size();
+//                System.out.println("hotel.getBookings().size() = " + hotel.getBookings().size());
+            }
+        }
     }
 }
