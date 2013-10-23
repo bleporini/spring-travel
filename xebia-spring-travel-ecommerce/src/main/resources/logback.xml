@@ -1,5 +1,5 @@
 <configuration scan="true" debug="false">
-
+    <jmxConfigurator/>
 	<if condition='isNull("catalina.home")'>
 		<then>
 			<property name="BASE_FOLDER" value="./target" />
