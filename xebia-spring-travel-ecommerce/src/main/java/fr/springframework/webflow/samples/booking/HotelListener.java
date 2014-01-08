@@ -17,8 +17,8 @@ public class HotelListener {
 
     @PostLoad
     public void onPostLoad(Hotel hotel){
-        System.out.println("HotelListener.onPostLoad");
-        if(bugEnabled.get()) {
+//        System.out.println("HotelListener.onPostLoad");
+            if(bugEnabled.get()) {
             if(override.get() == null || !override.get()){
                 hotel.getBookings().size();
 //                System.out.println("hotel.getBookings().size() = " + hotel.getBookings().size());
