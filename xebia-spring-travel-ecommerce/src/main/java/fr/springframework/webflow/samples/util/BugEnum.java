@@ -18,7 +18,8 @@ public enum BugEnum {
     BOOKING_SERVICE_LEAK(1337),
     METHOD_LOGGER(1221),
     JPA_EAGER_EMULATION(33),
-    BOOKING_NO_LIMIT(42);
+    BOOKING_NO_LIMIT(42),
+    DS_SIZE(200);
     
     private int code;
 

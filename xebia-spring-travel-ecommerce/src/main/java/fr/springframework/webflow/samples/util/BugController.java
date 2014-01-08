@@ -1,14 +1,20 @@
 package fr.springframework.webflow.samples.util;
 
-import fr.springframework.webflow.samples.booking.BookingService;
-import fr.springframework.webflow.samples.booking.HotelListener;
+import fr.springframework.webflow.samples.booking.*;
+import org.apache.commons.dbcp.BasicDataSource;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jmx.export.annotation.ManagedAttribute;
 import org.springframework.jmx.export.annotation.ManagedOperation;
 import org.springframework.jmx.export.annotation.ManagedResource;
 import org.springframework.stereotype.Component;
 import fr.springframework.webflow.samples.booking.BookingService;
-import fr.springframework.webflow.samples.booking.BugService;
+
+import javax.annotation.PostConstruct;
+import javax.management.InstanceAlreadyExistsException;
+import javax.management.MBeanRegistrationException;
+import javax.management.MalformedObjectNameException;
+import javax.management.NotCompliantMBeanException;
+import java.util.concurrent.atomic.AtomicBoolean;
 
 
 @ManagedResource("travel-ecommerce:type=BugController")
@@ -34,6 +40,25 @@ public class BugController {
 
     @Autowired
     private BugService bugService;
+
+    @Autowired
+    private BasicDataSource ds;
+
+    private static AtomicBoolean bugJdbcPoolSizeEnabled = new AtomicBoolean();
+
+    @PostConstruct
+    public void init() throws MalformedObjectNameException, NotCompliantMBeanException, InstanceAlreadyExistsException, MBeanRegistrationException {
+        final Bug bug = bugService.findByCode(BugEnum.DS_SIZE);
+        bugJdbcPoolSizeEnabled.set(bug == null || bug.isEnabled());
+        configDataSource();
+    }
+
+    private void configDataSource() {
+        int maxConn = bugJdbcPoolSizeEnabled.get()?2:200;
+        ds.setMaxActive(maxConn);
+        ds.setMaxIdle(maxConn);
+    }
+
 
 
     public CacheFilter getCacheFilter() {
@@ -131,6 +156,11 @@ public class BugController {
     @ManagedAttribute
     public String getBug9(){
         return getStatusString(HotelListener.bugEnabled.get());
+    }
+
+    @ManagedAttribute
+    public String getBug10(){
+        return getStatusString(bugJdbcPoolSizeEnabled.get());
     }
 
     @ManagedOperation
@@ -240,6 +270,21 @@ public class BugController {
         HotelListener.bugEnabled.set(true);
         bugService.setStatusByCode(BugEnum.JPA_EAGER_EMULATION,true);
 
+        return "We cannot do anything alone, but together we can do anything. Come on, friends, unity gives strength.";
+    }
+
+    @ManagedOperation
+    public String disableBug10(int securityCode) {
+        if (securityCode == BugEnum.DS_SIZE.getCode()) {
+            bugJdbcPoolSizeEnabled.set(false);
+            configDataSource();
+            bugService.setStatusByCode(BugEnum.DS_SIZE,false);
+            return "Bug 9 is now disabled";
+        }
+
+        bugJdbcPoolSizeEnabled.set(true);
+        configDataSource();
+        bugService.setStatusByCode(BugEnum.DS_SIZE,true);
         return "We cannot do anything alone, but together we can do anything. Come on, friends, unity gives strength.";
     }
 

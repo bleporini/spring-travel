@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <beans xmlns="http://www.springframework.org/schema/beans" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:tx="http://www.springframework.org/schema/tx"
+       xmlns:p="http://www.springframework.org/schema/p"
    xmlns:management="http://www.xebia.fr/schema/xebia-management-extras"
    xsi:schemaLocation="
            http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
@@ -25,7 +26,8 @@
          </bean>
       </property>
    </bean>
-   <!-- Deploys a in-memory "booking" datasource populated -->
+    <!--Deploys a in-memory "booking" datasource populated-->
+<!--
    <management:dbcp-datasource id="dataSource">
       <management:default-auto-commit value="false" />
       <management:driver-class-name value="${jdbc.driver}" />
@@ -36,4 +38,22 @@
       <management:max-active value="${jdbc.max}"/>
       <management:max-wait value="${jdbc.maxWait}"/>
    </management:dbcp-datasource>
+-->
+    <bean id="exporter" class="org.springframework.jmx.export.MBeanExporter" lazy-init="false">
+        <property name="beans"> <map>
+            <entry key="javax.sql:name=DataSource" value-ref="dataSource"/>
+        </map>
+        </property>
+    </bean>
+
+    <bean class="org.apache.commons.dbcp.BasicDataSource" id="dataSource"
+            p:defaultAutoCommit="false"
+            p:driverClassName="${jdbc.driver}"
+            p:url="${jdbc.url}"
+            p:username="${jdbc.username}"
+            p:password="${jdbc.password}"
+            p:initialSize="${jdbc.initial}"
+            p:maxActive="${jdbc.max}"
+            p:maxWait="${jdbc.maxWait}"/>
+
 </beans>

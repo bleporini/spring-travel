@@ -1,12 +1,20 @@
 package fr.springframework.webflow.samples.booking;
 
-import javax.persistence.EntityManager;
-import javax.persistence.PersistenceContext;
-
+import fr.springframework.webflow.samples.util.BugEnum;
+import org.apache.commons.dbcp.BasicDataSource;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import fr.springframework.webflow.samples.util.BugEnum;
+
+import javax.annotation.PostConstruct;
+import javax.management.InstanceAlreadyExistsException;
+import javax.management.MBeanRegistrationException;
+import javax.management.MalformedObjectNameException;
+import javax.management.NotCompliantMBeanException;
+import javax.persistence.EntityManager;
+import javax.persistence.PersistenceContext;
+import java.util.concurrent.atomic.AtomicBoolean;
 
 /**
  * Created by IntelliJ IDEA.
@@ -30,6 +38,7 @@ public class JpaBugService implements BugService {
     public void setEntityManager(EntityManager em) {
         this.em = em;
     }
+
 
     /**
      * {@inheritDoc}
