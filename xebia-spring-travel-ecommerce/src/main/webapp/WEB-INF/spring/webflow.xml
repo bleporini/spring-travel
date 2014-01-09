@@ -10,7 +10,8 @@
 
 	<!-- Executes flows: the entry point into the Spring Web Flow system -->
 	<webflow:flow-executor id="flowExecutor">
-		<webflow:flow-execution-listeners>
+        <webflow:flow-execution-repository max-executions="5" max-execution-snapshots="0" />
+        <webflow:flow-execution-listeners>
 			<webflow:listener ref="jpaFlowExecutionListener" />
 			<webflow:listener ref="securityFlowExecutionListener" />
 		</webflow:flow-execution-listeners>
