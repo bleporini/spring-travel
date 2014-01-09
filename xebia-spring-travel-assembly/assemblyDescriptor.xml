@@ -6,41 +6,54 @@
    <id>assembly</id>
    
    <formats>
-      <format>zip</format>
+      <format>dir</format>
    </formats>
    <includeBaseDirectory>true</includeBaseDirectory>
-   <baseDirectory>apache-tomcat-${tomcat.version}</baseDirectory>
+   <baseDirectory>hands-on-jprofiler</baseDirectory>
    
    <fileSets>
-      <fileSet>
-         <directory>apache-tomcat</directory>
-         <outputDirectory>/</outputDirectory>
-         <excludes>
-            <exclude>**/webapps/docs/**</exclude>
-            <exclude>**/webapps/examples/**</exclude>
-            <exclude>**/webapps/host-manager/**</exclude>
-            <exclude>**/webapps/manager/**</exclude>
-            <exclude>**/webapps/ROOT/**</exclude>
-            <exclude>**/bin/**</exclude>
-         </excludes>
-      </fileSet>
-      <fileSet>
-         <directory>apache-tomcat</directory>
-         <outputDirectory>/</outputDirectory>
-         <fileMode>0755</fileMode>
-         <directoryMode>0755</directoryMode>
-         <includes>
-            <include>bin/**</include>
-         </includes>
-      </fileSet>
-   </fileSets> 
+       <fileSet>
+           <directory>apache-jmeter-2.10</directory>
+           <fileMode>0755</fileMode>
+           <directoryMode>0755</directoryMode>
+       </fileSet>
+       <fileSet>
+           <directory>${project.basedir}</directory>
+           <includes>
+               <include>*.sh</include>
+           </includes>
+           <filtered>true</filtered>
+           <fileMode>0755</fileMode>
+       </fileSet>
+       <fileSet>
+           <directory>data</directory>
+           <outputDirectory>/hsqldb/data</outputDirectory>
+       </fileSet>
+   </fileSets>
    
    <dependencySets>
+       <dependencySet>
+           <includes>
+               <include>io.blep:tomcat:zip</include>
+               <include>io.blep:jmeter:zip</include>
+           </includes>
+           <outputDirectory>/</outputDirectory>
+           <fileMode>0755</fileMode>
+           <directoryMode>0755</directoryMode>
+           <unpack>true</unpack>
+       </dependencySet>
+       <dependencySet>
+           <includes>
+               <include>org.hsqldb:hsqldb</include>
+           </includes>
+           <outputDirectory>/hsqldb</outputDirectory>
+           <unpack>false</unpack>
+       </dependencySet>
       <dependencySet>
          <includes>
             <include>fr.xebia.demo.travel:xebia-spring-travel-antifraud</include>
          </includes>
-         <outputDirectory>webapps</outputDirectory>
+         <outputDirectory>apache-tomcat/webapps</outputDirectory>
          <outputFileNameMapping>antifraud.war</outputFileNameMapping>
          <unpack>false</unpack>
       </dependencySet>
@@ -48,7 +61,7 @@
          <includes>
             <include>fr.xebia.demo.travel:xebia-spring-travel-ecommerce</include>
          </includes>
-         <outputDirectory>webapps</outputDirectory>
+         <outputDirectory>apache-tomcat/webapps</outputDirectory>
          <outputFileNameMapping>ROOT.war</outputFileNameMapping>
          <unpack>false</unpack>
       </dependencySet>
