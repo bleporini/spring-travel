@@ -54,7 +54,7 @@ public class BugController {
     }
 
     private void configDataSource() {
-        int maxConn = bugJdbcPoolSizeEnabled.get()?2:200;
+        int maxConn = bugJdbcPoolSizeEnabled.get()?8:200;
         ds.setMaxActive(maxConn);
         ds.setMaxIdle(maxConn);
     }
