@@ -13,7 +13,7 @@ cd apache-tomcat/bin
 cd -
 
 echo Starting JMeter
-apache-jmeter-2.10/bin/jmeter -t apache-jmeter-2.10/data/xebia-spring-travel.jmx &
+apache-jmeter-${jmeter.version}/bin/jmeter -t apache-jmeter-${jmeter.version}/data/xebia-spring-travel.jmx &
 
 echo Starting JConsole
 jconsole `jps -v | grep apache-tomcat | awk '{print $1}'`&

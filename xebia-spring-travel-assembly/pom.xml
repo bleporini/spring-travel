@@ -7,6 +7,7 @@
    <name>xebia-spring-travel-assembly</name>
     <properties>
         <hsqldb.version>2.2.4</hsqldb.version>
+        <jmeter.version>2.10-light-no-data</jmeter.version>
     </properties>
 
     <packaging>pom</packaging>
@@ -45,7 +46,7 @@
        <dependency>
            <groupId>io.blep</groupId>
            <artifactId>jmeter</artifactId>
-           <version>2.10</version>
+           <version>${jmeter.version}</version>
            <type>zip</type>
        </dependency>
    </dependencies>

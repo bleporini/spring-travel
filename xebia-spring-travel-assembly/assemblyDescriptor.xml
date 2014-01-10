@@ -11,26 +11,6 @@
    <includeBaseDirectory>true</includeBaseDirectory>
    <baseDirectory>hands-on-jprofiler</baseDirectory>
    
-   <fileSets>
-       <fileSet>
-           <directory>apache-jmeter-2.10</directory>
-           <fileMode>0755</fileMode>
-           <directoryMode>0755</directoryMode>
-       </fileSet>
-       <fileSet>
-           <directory>${project.basedir}</directory>
-           <includes>
-               <include>*.sh</include>
-           </includes>
-           <filtered>true</filtered>
-           <fileMode>0755</fileMode>
-       </fileSet>
-       <fileSet>
-           <directory>data</directory>
-           <outputDirectory>/hsqldb/data</outputDirectory>
-       </fileSet>
-   </fileSets>
-   
    <dependencySets>
        <dependencySet>
            <includes>
@@ -66,4 +46,24 @@
          <unpack>false</unpack>
       </dependencySet>
    </dependencySets>
+
+    <fileSets>
+        <fileSet>
+            <directory>${project.basedir}</directory>
+            <includes>
+                <include>*.sh</include>
+            </includes>
+            <filtered>true</filtered>
+            <fileMode>0755</fileMode>
+        </fileSet>
+        <fileSet>
+            <directory>data</directory>
+            <outputDirectory>/hsqldb/data</outputDirectory>
+        </fileSet>
+        <fileSet>
+            <directory>jmeter-data</directory>
+            <outputDirectory>/apache-jmeter-${jmeter.version}/data</outputDirectory>
+        </fileSet>
+    </fileSets>
+
 </assembly>
