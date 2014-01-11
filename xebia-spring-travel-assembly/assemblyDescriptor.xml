@@ -10,8 +10,8 @@
    </formats>
    <includeBaseDirectory>true</includeBaseDirectory>
    <baseDirectory>hands-on-jprofiler</baseDirectory>
-   
-   <dependencySets>
+
+    <dependencySets>
        <dependencySet>
            <includes>
                <include>io.blep:tomcat:zip</include>
@@ -21,6 +21,11 @@
            <fileMode>0755</fileMode>
            <directoryMode>0755</directoryMode>
            <unpack>true</unpack>
+           <unpackOptions>
+               <excludes>
+                   <exclude>**/server.xml</exclude>
+               </excludes>
+           </unpackOptions>
        </dependencySet>
        <dependencySet>
            <includes>
@@ -63,6 +68,10 @@
         <fileSet>
             <directory>jmeter-data</directory>
             <outputDirectory>/apache-jmeter-${jmeter.version}/data</outputDirectory>
+        </fileSet>
+        <fileSet>
+            <directory>tomcat-conf</directory>
+            <outputDirectory>apache-tomcat/conf</outputDirectory>
         </fileSet>
     </fileSets>
 
