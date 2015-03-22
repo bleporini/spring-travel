@@ -2,6 +2,9 @@ This project is a demo application used by Xebia France as workshop material. Th
 
 To install the application follow these steps:
 
+#0 Install
+$ mvn clean install
+
 #1 Set up the environment (from spring-travel/xebia-spring-travel-environment-installer/)
 $ ./setup-environment.sh
 
