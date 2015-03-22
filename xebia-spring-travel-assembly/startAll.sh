@@ -7,7 +7,7 @@ nohup java -Xmx124m -classpath ../hsqldb-${hsqldb.version}.jar org.hsqldb.server
 cd -
 
 echo Starting Tomcat
-cd apache-tomcat/bin
+cd apache-tomcat-${tomcat.version}/bin
 ./startup.sh
 
 cd -

@@ -38,7 +38,7 @@
          <includes>
             <include>fr.xebia.demo.travel:xebia-spring-travel-antifraud</include>
          </includes>
-         <outputDirectory>apache-tomcat/webapps</outputDirectory>
+         <outputDirectory>apache-tomcat-${tomcat.version}/webapps</outputDirectory>
          <outputFileNameMapping>antifraud.war</outputFileNameMapping>
          <unpack>false</unpack>
       </dependencySet>
@@ -46,7 +46,7 @@
          <includes>
             <include>fr.xebia.demo.travel:xebia-spring-travel-ecommerce</include>
          </includes>
-         <outputDirectory>apache-tomcat/webapps</outputDirectory>
+         <outputDirectory>apache-tomcat-${tomcat.version}/webapps</outputDirectory>
          <outputFileNameMapping>ROOT.war</outputFileNameMapping>
          <unpack>false</unpack>
       </dependencySet>
@@ -72,7 +72,7 @@
         </fileSet>
         <fileSet>
             <directory>tomcat-conf</directory>
-            <outputDirectory>apache-tomcat/conf</outputDirectory>
+            <outputDirectory>apache-tomcat-${tomcat.version}/conf</outputDirectory>
         </fileSet>
     </fileSets>
 
