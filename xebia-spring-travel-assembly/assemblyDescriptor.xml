@@ -47,7 +47,7 @@
             <include>fr.xebia.demo.travel:xebia-spring-travel-ecommerce</include>
          </includes>
          <outputDirectory>apache-tomcat-${tomcat.version}/webapps</outputDirectory>
-         <outputFileNameMapping>ROOT.war</outputFileNameMapping>
+         <outputFileNameMapping>petclinic.war</outputFileNameMapping>
          <unpack>false</unpack>
       </dependencySet>
    </dependencySets>

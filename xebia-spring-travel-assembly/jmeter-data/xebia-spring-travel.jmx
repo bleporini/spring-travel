@@ -30,7 +30,7 @@
           <collectionProp name="Arguments.arguments">
             <elementProp name="CONTEXT_PATH" elementType="Argument">
               <stringProp name="Argument.name">CONTEXT_PATH</stringProp>
-              <stringProp name="Argument.value">/</stringProp>
+              <stringProp name="Argument.value">/petclinic</stringProp>
               <stringProp name="Argument.metadata">=</stringProp>
             </elementProp>
             <elementProp name="SERVER_HOST" elementType="Argument">
