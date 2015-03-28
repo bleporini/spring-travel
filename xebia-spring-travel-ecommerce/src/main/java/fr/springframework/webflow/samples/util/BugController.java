@@ -163,6 +163,11 @@ public class BugController {
         return getStatusString(bugJdbcPoolSizeEnabled.get());
     }
 
+    @ManagedAttribute
+    public String getBug11(){
+        return getStatusString(HotelsController.fakeExceptionBugEnabled.get());
+    }
+
     @ManagedOperation
     public String disableBug1(int securityCode) {
         if (securityCode == BugEnum.BOOKING_ACTION_CONTROLLER.getCode()) {
@@ -263,12 +268,12 @@ public class BugController {
     public String disableBug9(int securityCode) {
         if (securityCode == BugEnum.JPA_EAGER_EMULATION.getCode()) {
             HotelListener.bugEnabled.set(false);
-            bugService.setStatusByCode(BugEnum.JPA_EAGER_EMULATION,false);
+            bugService.setStatusByCode(BugEnum.JPA_EAGER_EMULATION, false);
             return "Bug 9 is now disabled";
         }
 
         HotelListener.bugEnabled.set(true);
-        bugService.setStatusByCode(BugEnum.JPA_EAGER_EMULATION,true);
+        bugService.setStatusByCode(BugEnum.JPA_EAGER_EMULATION, true);
 
         return "We cannot do anything alone, but together we can do anything. Come on, friends, unity gives strength.";
     }
@@ -279,12 +284,25 @@ public class BugController {
             bugJdbcPoolSizeEnabled.set(false);
             configDataSource();
             bugService.setStatusByCode(BugEnum.DS_SIZE,false);
-            return "Bug 9 is now disabled";
+            return "Bug 10 is now disabled";
         }
 
         bugJdbcPoolSizeEnabled.set(true);
         configDataSource();
         bugService.setStatusByCode(BugEnum.DS_SIZE,true);
+        return "We cannot do anything alone, but together we can do anything. Come on, friends, unity gives strength.";
+    }
+
+    @ManagedOperation
+    public String disableBug11(int securityCode) {
+        if (securityCode == BugEnum.FAKE_EXCEPTIONS.getCode()) {
+            HotelsController.fakeExceptionBugEnabled.set(false);
+            bugService.setStatusByCode(BugEnum.FAKE_EXCEPTIONS,false);
+            return "Bug 11 is now disabled";
+        }
+
+        HotelsController.fakeExceptionBugEnabled.set(true);
+        bugService.setStatusByCode(BugEnum.FAKE_EXCEPTIONS,true);
         return "We cannot do anything alone, but together we can do anything. Come on, friends, unity gives strength.";
     }
 

@@ -44,6 +44,8 @@ import java.util.concurrent.TimeUnit;
 import java.util.concurrent.atomic.AtomicInteger;
 import java.util.concurrent.atomic.AtomicLong;
 
+import static java.lang.System.nanoTime;
+
 @ManagedResource
 @Component
 public class BookingAction extends MultiAction implements SelfNaming,
@@ -137,11 +139,13 @@ public class BookingAction extends MultiAction implements SelfNaming,
         this.beanName = name;
     }
 
+
     @Profiled()
     public Event submitPayment(RequestContext context, Booking booking)
             throws Exception {
 
         long nanosBefore = System.nanoTime();
+
 
         try {
             try {
