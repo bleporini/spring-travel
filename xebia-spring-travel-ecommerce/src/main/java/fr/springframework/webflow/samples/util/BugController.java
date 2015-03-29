@@ -16,11 +16,9 @@ import javax.management.MalformedObjectNameException;
 import javax.management.NotCompliantMBeanException;
 import java.util.concurrent.atomic.AtomicBoolean;
 
-
 @ManagedResource("travel-ecommerce:type=BugController")
 @Component
 public class BugController {
-
     @Autowired
     private BookingActionController bookingAction;
     @Autowired
@@ -31,16 +29,10 @@ public class BugController {
     private BookingService bookingService;
     @Autowired
     private CacheFilter cacheFilter;
-
-    /**
-     * {@link TimeLoggerAspect}
-     */
     @Autowired
     private TimeLoggerAspect timeLoggerAspect;
-
     @Autowired
     private BugService bugService;
-
     @Autowired
     private BasicDataSource ds;
 
@@ -62,7 +54,7 @@ public class BugController {
     }
 
     private void configDataSource() {
-        int maxConn = bugJdbcPoolSizeEnabled.get()?8:200;
+        int maxConn = bugJdbcPoolSizeEnabled.get() ? 8 : 200;
         ds.setMaxActive(maxConn);
         ds.setMaxIdle(maxConn);
     }
@@ -111,76 +103,72 @@ public class BugController {
         this.bugService = bugService;
     }
 
-    private String getStatusString(boolean enabled){
-
+    private String getStatusString(boolean enabled) {
         return (enabled ? "Enabled" : "Disabled");
     }
 
     @ManagedAttribute
-    public String getBug1(){
+    public String getBug1() {
         return getStatusString(bookingAction.isBugEnabled());
     }
 
     @ManagedAttribute
-    public String getBug2(){
+    public String getBug2() {
         return getStatusString(jpaLogger.isBugEnabled());
     }
 
     @ManagedAttribute
-    public String getBug3(){
+    public String getBug3() {
         return getStatusString(databaseCacheAspect.isBugEnabled());
     }
 
     @ManagedAttribute
-    public String getBug4(){
+    public String getBug4() {
         return getStatusString(bookingService.isBookingsEnabled());
     }
 
     @ManagedAttribute
-    public String getBug5(){
+    public String getBug5() {
         return getStatusString(bookingService.isHotelsEnabled());
     }
 
     @ManagedAttribute
-    public String getBug6(){
+    public String getBug6() {
         return getStatusString(cacheFilter.isBugEnabled());
     }
 
-    /**
-     * @return status of the 7th bug.
-     */
     @ManagedAttribute
-    public String getBug7(){
+    public String getBug7() {
         return getStatusString(timeLoggerAspect.isBugEnabled());
     }
 
     @ManagedAttribute
-    public String getBug8(){
+    public String getBug8() {
         return getStatusString(bookingService.isBookings2Enabled());
     }
 
     @ManagedAttribute
-    public String getBug9(){
+    public String getBug9() {
         return getStatusString(HotelListener.bugEnabled.get());
     }
 
     @ManagedAttribute
-    public String getBug10(){
+    public String getBug10() {
         return getStatusString(bugJdbcPoolSizeEnabled.get());
     }
 
     @ManagedAttribute
-    public String getBug11(){
+    public String getBug11() {
         return getStatusString(HotelsController.fakeExceptionBugEnabled.get());
     }
 
     @ManagedAttribute
-    public String getBug12(){
+    public String getBug12() {
         return getStatusString(bugUglyQueries.get());
     }
 
     @ManagedAttribute
-    public String getBug13(){
+    public String getBug13() {
         return getStatusString(bugPayAttentionToFilters.get());
     }
 
@@ -224,7 +212,6 @@ public class BugController {
         return "Keep your fears to yourself, but share your inspiration with others.";
     }
 
-
     @ManagedOperation
     public String disableBug5(int securityCode) {
         if (securityCode == BugEnum.BOOKING_SERVICE_ENABLED_HOTELS.getCode()) {
@@ -245,12 +232,6 @@ public class BugController {
         return "Envy can be a positive motivator. Let it inspire you to work harder for what you want.";
     }
 
-    /**
-     * Disable bug 7.
-     *
-     * @param securityCode
-     * @return
-     */
     @ManagedOperation
     public String disableBug7(int securityCode) {
         if (securityCode == BugEnum.METHOD_LOGGER.getCode()) {
@@ -263,11 +244,6 @@ public class BugController {
         return "We cannot do anything alone, but together we can do anything. Come on, friends, unity gives strength.";
     }
 
-    /**
-     *
-     * @param securityCode
-     * @return
-     */
     @ManagedOperation
     public String disableBug8(int securityCode) {
         if (securityCode == BugEnum.BOOKING_NO_LIMIT.getCode()) {
@@ -299,13 +275,13 @@ public class BugController {
         if (securityCode == BugEnum.DS_SIZE.getCode()) {
             bugJdbcPoolSizeEnabled.set(false);
             configDataSource();
-            bugService.setStatusByCode(BugEnum.DS_SIZE,false);
+            bugService.setStatusByCode(BugEnum.DS_SIZE, false);
             return "Bug 10 is now disabled";
         }
 
         bugJdbcPoolSizeEnabled.set(true);
         configDataSource();
-        bugService.setStatusByCode(BugEnum.DS_SIZE,true);
+        bugService.setStatusByCode(BugEnum.DS_SIZE, true);
         return "We cannot do anything alone, but together we can do anything. Come on, friends, unity gives strength.";
     }
 
@@ -313,12 +289,12 @@ public class BugController {
     public String disableBug11(int securityCode) {
         if (securityCode == BugEnum.FAKE_EXCEPTIONS.getCode()) {
             HotelsController.fakeExceptionBugEnabled.set(false);
-            bugService.setStatusByCode(BugEnum.FAKE_EXCEPTIONS,false);
+            bugService.setStatusByCode(BugEnum.FAKE_EXCEPTIONS, false);
             return "Bug 11 is now disabled";
         }
 
         HotelsController.fakeExceptionBugEnabled.set(true);
-        bugService.setStatusByCode(BugEnum.FAKE_EXCEPTIONS,true);
+        bugService.setStatusByCode(BugEnum.FAKE_EXCEPTIONS, true);
         return "We cannot do anything alone, but together we can do anything. Come on, friends, unity gives strength.";
     }
 
@@ -326,12 +302,12 @@ public class BugController {
     public String disableBug12(int securityCode) {
         if (securityCode == BugEnum.UGLY_QUERIES.getCode()) {
             bugUglyQueries.set(false);
-            bugService.setStatusByCode(BugEnum.UGLY_QUERIES,false);
+            bugService.setStatusByCode(BugEnum.UGLY_QUERIES, false);
             return "Bug 12 is now disabled";
         }
 
         bugUglyQueries.set(true);
-        bugService.setStatusByCode(BugEnum.UGLY_QUERIES,true);
+        bugService.setStatusByCode(BugEnum.UGLY_QUERIES, true);
         return "We cannot do anything alone, but together we can do anything. Come on, friends, unity gives strength.";
     }
 
@@ -339,17 +315,17 @@ public class BugController {
     public String disableBug13(int securityCode) {
         if (securityCode == BugEnum.PAY_ATTENION_TO_FILTERS.getCode()) {
             bugPayAttentionToFilters.set(false);
-            bugService.setStatusByCode(BugEnum.PAY_ATTENION_TO_FILTERS,false);
+            bugService.setStatusByCode(BugEnum.PAY_ATTENION_TO_FILTERS, false);
             return "Bug 13 is now disabled";
         }
 
         bugPayAttentionToFilters.set(true);
-        bugService.setStatusByCode(BugEnum.PAY_ATTENION_TO_FILTERS,true);
+        bugService.setStatusByCode(BugEnum.PAY_ATTENION_TO_FILTERS, true);
         return "Are you looking at what you should be looking ?";
     }
 
     @ManagedOperation
-    public String resetAllBugs(){
+    public String resetAllBugs() {
         bugService.resetBugs();
         this.bookingAction.setBugStatus(true);
         this.cacheFilter.setBugEnabled(true);
