@@ -46,6 +46,7 @@ public class BugController {
 
     private static AtomicBoolean bugJdbcPoolSizeEnabled = new AtomicBoolean();
     public static AtomicBoolean bugUglyQueries = new AtomicBoolean();
+    public static AtomicBoolean bugPayAttentionToFilters = new AtomicBoolean();
 
     @PostConstruct
     public void init() throws MalformedObjectNameException, NotCompliantMBeanException, InstanceAlreadyExistsException, MBeanRegistrationException {
@@ -55,6 +56,9 @@ public class BugController {
 
         final Bug bugUgly = bugService.findByCode(BugEnum.UGLY_QUERIES);
         bugUglyQueries.set(bugUgly == null || bugUgly.isEnabled());
+
+        final Bug bugPayAttention = bugService.findByCode(BugEnum.PAY_ATTENION_TO_FILTERS);
+        bugPayAttentionToFilters.set(bugPayAttention == null || bugPayAttention.isEnabled());
     }
 
     private void configDataSource() {
@@ -62,8 +66,6 @@ public class BugController {
         ds.setMaxActive(maxConn);
         ds.setMaxIdle(maxConn);
     }
-
-
 
     public CacheFilter getCacheFilter() {
         return cacheFilter;
@@ -171,9 +173,15 @@ public class BugController {
     public String getBug11(){
         return getStatusString(HotelsController.fakeExceptionBugEnabled.get());
     }
+
     @ManagedAttribute
     public String getBug12(){
         return getStatusString(bugUglyQueries.get());
+    }
+
+    @ManagedAttribute
+    public String getBug13(){
+        return getStatusString(bugPayAttentionToFilters.get());
     }
 
     @ManagedOperation
@@ -327,7 +335,18 @@ public class BugController {
         return "We cannot do anything alone, but together we can do anything. Come on, friends, unity gives strength.";
     }
 
+    @ManagedOperation
+    public String disableBug13(int securityCode) {
+        if (securityCode == BugEnum.PAY_ATTENION_TO_FILTERS.getCode()) {
+            bugPayAttentionToFilters.set(false);
+            bugService.setStatusByCode(BugEnum.PAY_ATTENION_TO_FILTERS,false);
+            return "Bug 13 is now disabled";
+        }
 
+        bugPayAttentionToFilters.set(true);
+        bugService.setStatusByCode(BugEnum.PAY_ATTENION_TO_FILTERS,true);
+        return "Are you looking at what you should be looking ?";
+    }
 
     @ManagedOperation
     public String resetAllBugs(){

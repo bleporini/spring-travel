@@ -21,7 +21,8 @@ public enum BugEnum {
     BOOKING_NO_LIMIT(42),
     DS_SIZE(200),
     FAKE_EXCEPTIONS(21),
-    UGLY_QUERIES(1974);
+    UGLY_QUERIES(1974),
+    PAY_ATTENION_TO_FILTERS(2223);
 
     private int code;
 

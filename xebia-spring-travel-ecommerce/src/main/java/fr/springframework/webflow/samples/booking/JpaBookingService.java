@@ -1,5 +1,15 @@
 package fr.springframework.webflow.samples.booking;
 
+import com.google.guava.Longs;
+import fr.springframework.webflow.samples.util.BugEnum;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Repository;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+import org.springframework.util.StringUtils;
+
 import javax.annotation.PostConstruct;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
@@ -8,16 +18,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.atomic.AtomicBoolean;
 
-import fr.springframework.webflow.samples.util.BugController;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Repository;
-import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
-import org.springframework.util.StringUtils;
-import fr.springframework.webflow.samples.util.BugEnum;
-
+import static fr.springframework.webflow.samples.util.BugController.bugPayAttentionToFilters;
 import static fr.springframework.webflow.samples.util.BugController.bugUglyQueries;
 
 /**
@@ -105,13 +106,13 @@ public class JpaBookingService implements BookingService {
 
             if (isBookingsBugEnabled.get()) {
                 hqlQuery = "select distinct b from Booking b" +
-                            " left join fetch b.hotel f" +
-                            " left join fetch f.bookings bb" +
-                            " left join fetch bb.user u " +
-                            " left join fetch u.bookings  d" +
-                            " left join fetch d.hotel  h " +
-                            "where b.user.username = :username " +
-                            "order by b.checkinDate";
+                        " left join fetch b.hotel f" +
+                        " left join fetch f.bookings bb" +
+                        " left join fetch bb.user u " +
+                        " left join fetch u.bookings  d" +
+                        " left join fetch d.hotel  h " +
+                        "where b.user.username = :username " +
+                        "order by b.checkinDate";
             } else {
                 hqlQuery = "select  b from Booking b where b.user.username = :username order by b.checkinDate";
             }
@@ -122,8 +123,8 @@ public class JpaBookingService implements BookingService {
 
             HotelListener.override.set(Boolean.TRUE);
 
-            return isBookingsBug2Enabled.get()?
-                    bookings.getResultList():
+            return isBookingsBug2Enabled.get() ?
+                    bookings.getResultList() :
                     bookings.setMaxResults(5).getResultList();
         } else {
             return null;
@@ -133,14 +134,17 @@ public class JpaBookingService implements BookingService {
     @Transactional(readOnly = true)
     @SuppressWarnings("unchecked")
     public List<Hotel> findHotels(SearchCriteria criteria) {
-        final long l = System.currentTimeMillis();
+        long l = System.currentTimeMillis();
+        if (bugPayAttentionToFilters.get()) {
+            l = Longs.valueOf();
+        }
         final String pattern = getSearchPattern(criteria);
         final String hqlQuery = "select h from Hotel h where " +
                 "lower(h.name) like " + pattern +
                 " or lower(h.city) like " + pattern +
                 " or lower(h.zip) like " + pattern +
                 " or lower(h.address) like " + pattern +
-                (bugUglyQueries.get() ? " and " + l + " = " + l :"");
+                (bugUglyQueries.get() ? " and " + l + " = " + l : "");
         final List resultList;
 
         if (isHotelsBugEnabled.get()) {
@@ -169,9 +173,12 @@ public class JpaBookingService implements BookingService {
 
     @Transactional(readOnly = true)
     public Hotel findHotelById(Long id) {
-        if(bugUglyQueries.get()) {
-            final long l = System.currentTimeMillis();
-            return em.createQuery("from Hotel where id = " + id + " and " + l +" = " + l, Hotel.class).getSingleResult();
+        long l = System.currentTimeMillis();
+        if (bugPayAttentionToFilters.get()) {
+            l = Longs.valueOf();
+        }
+        if (bugUglyQueries.get()) {
+            return em.createQuery("from Hotel where id = " + id + " and " + l + " = " + l, Hotel.class).getSingleResult();
         }
         return em.find(Hotel.class, id);
     }
@@ -209,7 +216,6 @@ public class JpaBookingService implements BookingService {
                 .setParameter("username", username)
                 .getSingleResult();
     }
-
 
 
 }
