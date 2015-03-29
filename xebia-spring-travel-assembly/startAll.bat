@@ -11,7 +11,7 @@ start catalina.bat run
 cd ../..
 
 echo Starting JMeter
-start apache-jmeter-${jmeter.version}/bin/jmeter -t apache-jmeter-${jmeter.version}/data/xebia-spring-travel.jmx
+start apache-jmeter-${jmeter.version}/bin/jmeter.bat -t apache-jmeter-${jmeter.version}/data/xebia-spring-travel.jmx
 
 echo Starting JConsole
 start jconsole
