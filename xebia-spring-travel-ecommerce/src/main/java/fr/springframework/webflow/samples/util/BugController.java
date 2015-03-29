@@ -45,12 +45,16 @@ public class BugController {
     private BasicDataSource ds;
 
     private static AtomicBoolean bugJdbcPoolSizeEnabled = new AtomicBoolean();
+    public static AtomicBoolean bugUglyQueries = new AtomicBoolean();
 
     @PostConstruct
     public void init() throws MalformedObjectNameException, NotCompliantMBeanException, InstanceAlreadyExistsException, MBeanRegistrationException {
         final Bug bug = bugService.findByCode(BugEnum.DS_SIZE);
         bugJdbcPoolSizeEnabled.set(bug == null || bug.isEnabled());
         configDataSource();
+
+        final Bug bugUgly = bugService.findByCode(BugEnum.UGLY_QUERIES);
+        bugUglyQueries.set(bugUgly == null || bugUgly.isEnabled());
     }
 
     private void configDataSource() {
@@ -166,6 +170,10 @@ public class BugController {
     @ManagedAttribute
     public String getBug11(){
         return getStatusString(HotelsController.fakeExceptionBugEnabled.get());
+    }
+    @ManagedAttribute
+    public String getBug12(){
+        return getStatusString(bugUglyQueries.get());
     }
 
     @ManagedOperation
@@ -303,6 +311,19 @@ public class BugController {
 
         HotelsController.fakeExceptionBugEnabled.set(true);
         bugService.setStatusByCode(BugEnum.FAKE_EXCEPTIONS,true);
+        return "We cannot do anything alone, but together we can do anything. Come on, friends, unity gives strength.";
+    }
+
+    @ManagedOperation
+    public String disableBug12(int securityCode) {
+        if (securityCode == BugEnum.UGLY_QUERIES.getCode()) {
+            bugUglyQueries.set(false);
+            bugService.setStatusByCode(BugEnum.UGLY_QUERIES,false);
+            return "Bug 11 is now disabled";
+        }
+
+        bugUglyQueries.set(true);
+        bugService.setStatusByCode(BugEnum.UGLY_QUERIES,true);
         return "We cannot do anything alone, but together we can do anything. Come on, friends, unity gives strength.";
     }
 
