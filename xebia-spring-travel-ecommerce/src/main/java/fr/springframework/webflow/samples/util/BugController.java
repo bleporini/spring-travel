@@ -319,7 +319,7 @@ public class BugController {
         if (securityCode == BugEnum.UGLY_QUERIES.getCode()) {
             bugUglyQueries.set(false);
             bugService.setStatusByCode(BugEnum.UGLY_QUERIES,false);
-            return "Bug 11 is now disabled";
+            return "Bug 12 is now disabled";
         }
 
         bugUglyQueries.set(true);
