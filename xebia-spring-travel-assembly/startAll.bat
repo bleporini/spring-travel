@@ -1,3 +1,5 @@
+@echo off
+
 echo Starting HSQLDB
 cd hsqldb/data/
 start java -Xmx124m -classpath ../hsqldb-${hsqldb.version}.jar org.hsqldb.server.Server --database.0 file:bookings --dbname.0 bookings --database.1 file:fraud --dbname.1 fraud
