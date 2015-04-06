@@ -46,6 +46,7 @@
         </property>
     </bean>
 
+<!--
     <bean class="com.mchange.v2.c3p0.ComboPooledDataSource" id="dataSource"
           p:driverClass="${jdbc.driver}"
           p:jdbcUrl="${jdbc.url}"
@@ -54,8 +55,9 @@
           p:initialPoolSize="${jdbc.initial}"
           p:maxPoolSize="${jdbc.max}"
           />
+-->
 
-    <bean class="org.apache.commons.dbcp.BasicDataSource" id="TcDataSource"
+    <bean class="org.apache.commons.dbcp.BasicDataSource" id="dataSource"
             p:defaultAutoCommit="false"
             p:driverClassName="${jdbc.driver}"
             p:url="${jdbc.url}"
